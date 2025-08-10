@@ -1,0 +1,79 @@
+.jobs24h-link:hover {
+  color: #2196f3;
+  text-shadow: 0 0 3px #2196f3, 0 0 1px #2196f3;
+}
+.applied-link:hover {
+  color: #2196f3;
+  text-shadow: 0 0 3px #2196f3, 0 0 1px #2196f3;
+}
+.contact-link:hover {
+  color: #2196f3;
+  text-shadow: 0 0 3px #2196f3, 0 0 1px #2196f3;
+}
+.homepage-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #f7f9fc;
+  margin: 0;
+  padding: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  color: #000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 32px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.navbar-left .brand {
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #007bff;
+  letter-spacing: 1px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.contact-btn {
+  margin-right: 18px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.contact-btn:hover {
+  background: #0056b3;
+}
+.contact-link {
+  margin-right: 18px;
+  font-size: 1rem;
+  color: #000;
+  font-weight: 500;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.profile-icon {
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.profile-icon:hover {
+  color: #007bff;
+}

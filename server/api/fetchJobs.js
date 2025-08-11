@@ -1,24 +1,43 @@
 import { fetch } from 'undici';
 
-export async function fetchJobs({ title = '', location = '', limit = 10, offset = 0 } = {}) {
-  const params = [];
-  if (title) params.push(`title=${encodeURIComponent(title)}`);
-  if (location) params.push(`location=${encodeURIComponent(location)}`);
-  params.push(`limit=${limit}`);
-  params.push(`offset=${offset}`);
-  const queryString = params.length ? `?${params.join('&')}` : '';
 
-  const url = `https://api.theirstack.com/api/jobs${queryString}`;
-  const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YWRhc2FpcmFqdTEyM0BnbWFpbC5jb20iLCJwZXJtaXNzaW9ucyI6InVzZXIiLCJjcmVhdGVkX2F0IjoiMjAyNS0wOC0wOVQwOTo1MzoyMy42ODA0MTErMDA6MDAifQ.Ln5d7k7Ri6Xm9yRdmaI_RGw5__VYKc4-EiFtptpc_BI';
+export async function fetchJobs({ title = '', location = '', size = 50 } = {}) {
+  const url = 'https://api.apijobs.dev/v1/job/search';
+
+  const queryParts = [];
+  if (title) {
+    queryParts.push(title);
+  }
+  if (location) {
+    queryParts.push(`in ${location}`);
+  }
+  let q = queryParts.join(' ');
+
+  // If the query is empty, default to a general search to get some results.
+  if (!q.trim()) {
+    q = 'developer';
+  }
+
+  const body = { q, size };
+
+  const apiKey = process.env.APIJOBS_DEV_API_KEY;
+  if (!apiKey) {
+    throw new Error('Server configuration error: APIJOBS_DEV_API_KEY is not defined.');
+  }
 
   const response = await fetch(url, {
+    method: 'POST',
     headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Accept': 'application/json'
-    }
+      apikey: apiKey,
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify(body)
   });
+
   if (!response.ok) {
-    throw new Error(`TheirStack API error: ${response.status} ${response.statusText}`);
+    const errorBody = await response.text();
+    throw new Error(`APIJobs.dev API error: ${response.status} ${response.statusText} - ${errorBody}`);
   }
-  return await response.json();
+  return response.json();
 }

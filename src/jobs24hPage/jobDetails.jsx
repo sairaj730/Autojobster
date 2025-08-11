@@ -5,18 +5,36 @@ import './jobDetails.css';
 const JobDetails = () => {
   const { id } = useParams();
   const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/api/jobs')
-      .then(res => res.json())
-      .then(data => {
-        const jobs = data.jobs || data;
-        const found = jobs.find(j => String(j.id || j._id) === id);
-        setJob(found);
-      })
-      .catch(() => setJob(null));
+    if (!id) return;
+
+    const fetchJob = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`/api/jobs/${id}`);
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({})); // Try to get error message from backend
+          throw new Error(errorData.error || `Job not found (status: ${response.status})`);
+        }
+        const data = await response.json();
+        setJob(data);
+      } catch (e) {
+        setError(e.message);
+        setJob(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJob();
   }, [id]);
 
+  if (loading) return <div className="job-details-container">Loading...</div>;
+  if (error) return <div className="job-details-container error">Error: {error}</div>;
   if (!job) return <div className="job-details-container">Job not found.</div>;
 
   return (

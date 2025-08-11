@@ -1,13 +1,8 @@
-.jobs24h-link:hover {
-  color: #2196f3;
-  text-shadow: 0 0 3px #2196f3, 0 0 1px #2196f3;
-}
-.applied-link:hover {
-  color: #2196f3;
-  text-shadow: 0 0 3px #2196f3, 0 0 1px #2196f3;
-}
-.contact-link:hover {
-  color: #2196f3;
+.contact-link:hover,
+.applied-link:hover,
+.jobs24h-link:hover,
+.profile-icon:hover {
+  color: hwb(207 13% 5%);
   text-shadow: 0 0 3px #2196f3, 0 0 1px #2196f3;
 }
 .homepage-container {
@@ -59,10 +54,13 @@
   transition: background 0.2s;
 }
 .contact-btn:hover {
-  background: #0056b3;
+  background: hwb(207 13% 5%);
 }
+.navbar-right > * + * {
+  margin-left: 18px;
+}
+
 .contact-link {
-  margin-right: 18px;
   font-size: 1rem;
   color: #000;
   font-weight: 500;
@@ -74,6 +72,4 @@
   cursor: pointer;
   transition: color 0.2s;
 }
-.profile-icon:hover {
-  color: #007bff;
-}
+

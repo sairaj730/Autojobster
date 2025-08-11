@@ -1,46 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './jobs24h.css';
 
 const Jobs24h = () => {
   const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/jobs')
-      .then(res => res.json())
-      .then(data => {
-        console.log('Jobs API response:', data);
-        setJobs(data.jobs || data.results || data);
+    const fetchJobsData = async () => {
+      try {
+        // This relative URL will be proxied by Vite to http://localhost:3000/api/jobs
+        const response = await fetch('http://localhost:3000/api/jobs');
+        console.log("front end fetch called...")
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        // The API may return data in a `results` or `jobs` property, or as a root array.
+        // || data.jobs || (Array.isArray(data) ? data : [])
+        setJobs(data.hits);
+        console.log("hell: ",data.hits);
+      } catch (e) {
+        setError(e.message);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => {
-        setError('Failed to fetch jobs');
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchJobsData();
   }, []);
 
+  console.log("this is the jobs data for front end: ",jobs);
+
+  if (loading) return <div className="jobs-container">Loading jobs...</div>;
+  if (error) return <div className="jobs-container error">Error fetching jobs: {error}</div>;
+  if (jobs.length === 0) return <div className="jobs-container">No jobs found.</div>;
+
   return (
-    <div className="jobs24h-container">
-      <h2>Jobs Posted in Last 24 Hours</h2>
-      {loading && <div>Loading jobs...</div>}
-      {error && <div style={{color: 'red'}}>{error}</div>}
-      <div className="jobs-list">
-        {!loading && !error && jobs.length === 0 && (
-          <div>No jobs found.</div>
-        )}
-        {jobs.map(job => (
-          <div
-            className="job-card"
-            key={job.id || job._id}
-            onClick={() => navigate(`/jobs24h/${job.id || job._id}`)}
-          >
-            <h3>{job.company || job.company_name}</h3>
-            <p><strong>Role:</strong> {job.role || job.title}</p>
-            <p><strong>Skills:</strong> {Array.isArray(job.skills) ? job.skills.join(', ') : job.skills || job.required_skills}</p>
-            <p><strong>Eligibility:</strong> {job.eligibility || job.qualification || job.description}</p>
+    <div className="jobs-container">
+      <h1>Latest Jobs</h1>
+      <div className="job-list">
+        {jobs.map((job) => (
+          <div key={job.id || job._id} className="job-card">
+            <Link to={`/jobs/${job.id || job._id}`}>
+              <h3>{job.title}</h3>
+            </Link>
+            <p className="company-name">{job.company_name}</p>
+            <p className="job-location">{job.location}</p>
           </div>
         ))}
       </div>

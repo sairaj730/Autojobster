@@ -1,9 +1,11 @@
-import React from 'react';
 import Jobs24h from '../jobs24hPage/jobs24h';
 import './homepage.css';
 import { FaUserCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Homepage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="homepage-container">
       <nav className="navbar">
@@ -13,29 +15,31 @@ const Homepage = () => {
         <div className="navbar-right">
           <span
             className="contact-link"
-            onClick={() => window.location.href = '/contact'}
+            onClick={() => navigate('/contact')}
             style={{ cursor: 'pointer' }}
           >
             Contact Us
           </span>
           <span
             className="applied-link"
-            onClick={() => window.location.href = '/applied'}
-            style={{ cursor: 'pointer', marginLeft: '18px', color: '#000', fontWeight: 500 }}
+            onClick={() => navigate('/applied')}
+            style={{ cursor: 'pointer', color: '#000', fontWeight: 500 }}
           >
             Applied Jobs
           </span>
           <span
             className="jobs24h-link"
-            onClick={() => window.location.href = '/jobs24h'}
-            style={{ cursor: 'pointer', marginLeft: '18px', color: '#000', fontWeight: 500 }}
+            onClick={() => navigate('/jobs24h')}
+            style={{ cursor: 'pointer', color: '#000', fontWeight: 500 }}
           >
-            Jobs (24h)
+            Jobs
           </span>
           <FaUserCircle className="profile-icon" size={32} />
         </div>
       </nav>
-      <Jobs24h />
+      <main>
+        <Jobs24h />
+      </main>
     </div>
   );
 };

@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './homePage/homepage';
 import Contact from './contactPage/contact';
 import Applied from './appliedPage/applied';
-import Jobs24h from './jobs24hPage/jobs24h';
-import JobDetails from './jobs24hPage/jobDetails';
+import Jobs24h from './jobsPage/jobs';
+import JobDetails from './jobsPage/jobDetails';
 import './App.css';
 
 function App() {

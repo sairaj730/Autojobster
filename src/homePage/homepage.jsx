@@ -1,4 +1,4 @@
-import Jobs24h from '../jobs24hPage/jobs24h';
+import Jobs24h from '../jobsPage/jobs';
 import './homepage.css';
 import { FaUserCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';

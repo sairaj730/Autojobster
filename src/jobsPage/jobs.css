@@ -1,0 +1,90 @@
+.jobs-container {
+  padding: 20px;
+  height: 100vh;
+}
+
+.jobs-container.error {
+  color: red;
+}
+
+.job-list {
+  /* overflow-y: auto; */
+  display: flex;
+  flex-direction: row;
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+  gap: 20px;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  width:100vw;
+  height: 100%;
+}
+
+.job-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  /* flex: 0 1 300px; */
+  border-radius: 8px;
+}
+
+.job-card h3 {
+  margin-top: 0;
+}
+
+.job-card a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.job-card a:hover {
+  text-decoration: underline;
+}
+
+.job-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.more-details {
+  background-color: #eaeaea;
+  color: rgb(0, 0, 0);
+  border: 1px solid #ddd;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.more-details:hover {
+  background-color: #6cabee;
+}
+
+.apply-now {
+  background-color: #fcfcfc; /* Vibrant orange to stand out */
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 20px; /* Rounded pill style */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.apply-now:hover {
+  background-color: #1e10e6;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
